@@ -15,5 +15,9 @@
   ],
   "author": "dlcaio",
   "license": "MIT",
-  "readme": "README.md"
+  "readme": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dlcaio/discord-logger"
+  }
 }
