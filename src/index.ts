@@ -3,6 +3,7 @@ import { URL } from "url";
 
 export interface DiscordLoggerOptions {
   webhookUrl: string;
+  errorWebhookUrl?: string;
   username?: string;
   avatarUrl?: string;
   enableConsole?: boolean;
@@ -12,12 +13,16 @@ type LogLevel = "info" | "warn" | "error" | "debug";
 
 export class DiscordLogger {
   private webhookUrl: URL;
+  private errorWebhookUrl?: URL;
   private username: string;
   private avatarUrl?: string;
   private enableConsole: boolean;
 
   constructor(options: DiscordLoggerOptions) {
     this.webhookUrl = new URL(options.webhookUrl);
+    this.errorWebhookUrl = options.errorWebhookUrl
+      ? new URL(options.errorWebhookUrl)
+      : undefined;
     this.username = options.username || "Logger";
     this.avatarUrl = options.avatarUrl;
     this.enableConsole = options.enableConsole !== false;
@@ -44,10 +49,15 @@ export class DiscordLogger {
       ],
     });
 
+    const { hostname, pathname, search } =
+      this.errorWebhookUrl && level === "error"
+        ? this.errorWebhookUrl
+        : this.webhookUrl;
+
     const options = {
       method: "POST",
-      hostname: this.webhookUrl.hostname,
-      path: this.webhookUrl.pathname + this.webhookUrl.search,
+      hostname,
+      path: pathname + search,
       headers: {
         "Content-Type": "application/json",
         "Content-Length": Buffer.byteLength(payload),
