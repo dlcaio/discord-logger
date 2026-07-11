@@ -1,11 +1,19 @@
 {
   "name": "@dlcaio/discord-logger",
-  "version": "1.2.0",
+  "version": "2.0.0",
+  "description": "A lightweight TypeScript logger that sends structured logs to Discord webhooks.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
-    "test": "node test/test.js"
+    "test": "npm run build && node --test",
+    "prepublishOnly": "npm test"
   },
   "keywords": [
     "discord",
@@ -15,9 +23,19 @@
   ],
   "author": "dlcaio",
   "license": "MIT",
-  "readme": "README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dlcaio/discord-logger"
+    "url": "git+https://github.com/dlcaio/discord-logger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dlcaio/discord-logger/issues"
+  },
+  "homepage": "https://github.com/dlcaio/discord-logger#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.10",
+    "typescript": "^5.8.3"
   }
 }
